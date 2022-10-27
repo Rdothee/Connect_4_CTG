@@ -1,64 +1,66 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
+using static System.Console;
 
 namespace Connect_4_CTG
 {
-    internal static class Menu
+    internal class Menu
     {
+        private int SelectedIndex;
+        private String[] Options;
+        private String Prompt;
 
-        public static void MainMenu()
+        public Menu( string[] options, string prompt)
         {
-            PrintMenu();
-            bool Chosen = false;
-            while (!Chosen)
+            SelectedIndex = 0;
+            Options = options;
+            Prompt = prompt;
+        }
+
+        private void DisplayOptions()
+        {
+            WriteLine(Prompt);
+            for(int i = 0; i < Options.Length; i++)
             {
-                String input = ReadInput();
-                switch (input)
+                string currentOption = Options[i];
+                string prefix;
+
+                if ( i == SelectedIndex)
                 {
-                    case "1":
-
-
-                    case "2":
-
-
-                    case "3":
-                        System.Environment.Exit(1);
-                        break;
-
-                    default:
-                        Console.WriteLine("Enter number from 1 to 3 ");
-                        Chosen = false;
-                        break;
-
+                    prefix = "*";
+                    ForegroundColor = ConsoleColor.Black;
+                    BackgroundColor = ConsoleColor.White; 
                 }
+                else
+                {
+                    prefix = " ";
+                    ForegroundColor = ConsoleColor.White;
+                    BackgroundColor = ConsoleColor.Black;
+                }
+
+                WriteLine($"{prefix} << {currentOption} >>");
             }
+            ResetColor();
         }
 
-        private static void PrintMenu()
+        public int Run()
         {
-            Console.Clear();
-            Console.WriteLine("---- Connect 4 ----");
-            Console.WriteLine("\t1) Start Game");
-            Console.WriteLine("\t2) Select Players");
-            Console.WriteLine("\t3) Exit");
-            Console.Write("\r\nSelect an option: ");
-        }
+            ConsoleKey keyPressed;
 
-        private static String ReadInput()
-        {
-            String input = null;
-            try
+            do
             {
-                    input = Console.ReadLine();
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine("---IOexception occured---");
-                TextWriter errorWriter = Console.Error;
-                errorWriter.WriteLine(e.Message);
+                Clear();
+                DisplayOptions();
 
-            }
-            return input;
+
+                ConsoleKeyInfo keyInfo = ReadKey(true);
+                keyPressed = keyInfo.Key;
+
+
+
+            }while(keyPressed != ConsoleKey.Enter);
+
+            return SelectedIndex;
         }
     }
 }

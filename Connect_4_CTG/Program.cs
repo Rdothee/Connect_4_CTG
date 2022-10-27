@@ -8,6 +8,7 @@ internal class Program
     static void Main(string[] args)
 
     {
-        Connect_4.Start();
+        Connect_4 game1 = new Connect_4();
+        game1.Start();  
     }
 }

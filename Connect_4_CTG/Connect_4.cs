@@ -5,16 +5,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using static System.Console;
 
 namespace Connect_4_CTG
 {
-    internal static class Connect_4
+    internal class Connect_4
     {
-        public static void Start()
+        public void Start()
         {
-            Menu.MainMenu();
+            
+            WriteLine("The game is starting!...\n\n");
 
-           
+            string prompt = "Welcom to Connect-4. What would you like to do?";
+            String[] options = { "Play", "About", "Exit" };
+            Menu mainMenu = new Menu(options, prompt);
+            int selectedIndex = mainMenu.Run();
+            
+
+            WriteLine("press any key to exit...");
+
+            ReadKey(true);
+            
         }
     }
 }
