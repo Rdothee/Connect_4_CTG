@@ -56,6 +56,24 @@ namespace Connect_4_CTG
                 ConsoleKeyInfo keyInfo = ReadKey(true);
                 keyPressed = keyInfo.Key;
 
+                //update selectedIndex based on arrow key
+                if(keyPressed == ConsoleKey.UpArrow)
+                {
+                    SelectedIndex--;
+                    if(SelectedIndex < 0)
+                    {
+                        SelectedIndex = Options.Length - 1;
+                    }
+                }
+                else if(keyPressed == ConsoleKey.DownArrow)
+                {
+                    SelectedIndex++;
+                    if (SelectedIndex > Options.Length-1)
+                    {
+                        SelectedIndex = 0;
+                    }
+                }
+
 
 
             }while(keyPressed != ConsoleKey.Enter);
