@@ -22,7 +22,6 @@ namespace Connect_4_CTG
 
         private void RunMainMenu()
         {
-            WriteLine("The game is starting!...\n\n");
            string prompt = Banner;
             prompt += @"
 Welcom to Connect-4. What would you like to do?
@@ -77,7 +76,25 @@ use the arrow keys to cycle through options and press enter to select an option.
 
         private void RunFirstChoice()
         {
+            String prompt = "What color would you like to play as?";
+            String[] options = { "Red", "Green", "Blue", "Yellow" };
+            Menu colorMenu = new Menu(options, prompt);
+            int selectedIndex = colorMenu.Run();
 
+            switch (selectedIndex)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+
+            }
         }
     }
 }
