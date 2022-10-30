@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Connect_4_CTG
 {
-    internal abstract class Player
+    internal abstract class Player : IPlayer
     {
         public string Name { get; set; }
         public ConsoleColor Color { get; set; }
@@ -16,13 +16,13 @@ namespace Connect_4_CTG
 
         public Player(String name, ConsoleColor color)
         {
-            this.Name = name;   
-            this.Color = color; 
+            this.Name = name;
+            this.Color = color;
 
 
         }
         public abstract void Play();
-        
-     
+
+
     }
 }

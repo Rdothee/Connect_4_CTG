@@ -9,6 +9,9 @@ using static System.Console;
 
 namespace Connect_4_CTG
 {
+    /*
+     * This class is responsible for all menu's in the game 
+     */
     internal class Connect_4
     {
         private string Banner=" ";
@@ -79,7 +82,7 @@ use the arrow keys to cycle through options and press enter to select an option.
         private void RunFirstChoice()
         {
             string prompt = $"Quickly start a game OR customise some properties";
-            string[] options = { "Quickstart", "Custome" };
+            string[] options = { "Quickstart", "Custom" };
             Menu gameTypeMenu = new Menu(options, prompt);
             int selectedIndex = gameTypeMenu.Run();
 
@@ -101,15 +104,16 @@ use the arrow keys to cycle through options and press enter to select an option.
         private void CustomStart()
         {
             Clear();
-            Player player1 = CreateNewPlayer();
+            IPlayer player1 = CreateNewPlayer();
             Clear();
-            Player player2 = CreateNewPlayer();
+            IPlayer player2 = CreateNewPlayer();
         }
 
         private void QuickStart()
         {
-            Player player1 = new HumanPlayer("player1",ConsoleColor.Red,true);
-            Player player2 = new HumanPlayer("player2", ConsoleColor.Yellow, false);
+            IPlayer player1 = new HumanPlayer("player1",ConsoleColor.Red);
+            IPlayer player2 = new HumanPlayer("player2", ConsoleColor.Yellow);
+            //TODO: implement bot choice instead of second human player
         }
 
         private Player CreateNewPlayer()
@@ -134,21 +138,14 @@ use the arrow keys to cycle through options and press enter to select an option.
 
         }
 
-        private int ChoosePlayerType(bool isPlayer1)
+        private int ChoosePlayerType()
         {
-            if(isPlayer1)
-            {
-                return 0;
-                WriteLine("Player one is always human");
-            }
-            else
-            {
-                string prompt = "Select oponent:";
+                string prompt = "Select playertype:";
                 string[] options = { "Human" ,"Bot (easy)"};
                 Menu colorMenu = new Menu(options, prompt);
                 int selectedIndex = colorMenu.Run();
                 return selectedIndex;
-            }
+            
         }
 
         private ConsoleColor AskColor()
