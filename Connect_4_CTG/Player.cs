@@ -11,6 +11,16 @@ namespace Connect_4_CTG
         public string Name { get; set; }
         public ConsoleColor Color { get; set; }
         public bool IsPlaying { get; protected set; }
+
+        public Player() { }
+
+        public Player(String name, ConsoleColor color)
+        {
+            this.Name = name;   
+            this.Color = color; 
+
+
+        }
         public abstract void Play();
         
      

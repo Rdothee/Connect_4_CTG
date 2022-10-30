@@ -12,7 +12,7 @@ namespace Connect_4_CTG
     internal class Connect_4
     {
         private string Banner=" ";
-        private string Player; 
+        //private bool IsPlayer1; 
 
 
         public void Start()
@@ -78,14 +78,8 @@ use the arrow keys to cycle through options and press enter to select an option.
 
         private void RunFirstChoice()
         {
-           
-            
-        }
-
-        private void GameType()
-        {
             string prompt = $"Quickly start a game OR customise some properties";
-            string[] options = { "Quickstart", "Custome"};
+            string[] options = { "Quickstart", "Custome" };
             Menu gameTypeMenu = new Menu(options, prompt);
             int selectedIndex = gameTypeMenu.Run();
 
@@ -107,24 +101,22 @@ use the arrow keys to cycle through options and press enter to select an option.
         private void CustomStart()
         {
             Clear();
-            Player = "Player 1";
             Player player1 = CreateNewPlayer();
             Clear();
-            Player = "Player 2";
             Player player2 = CreateNewPlayer();
         }
 
         private void QuickStart()
         {
-            Player player1 = CreateNewPlayer("player1",ConsoleColor.Red,0);
-            Player player2 = CreateNewPlayer("player1", ConsoleColor.Red, ); ;
+            Player player1 = new HumanPlayer("player1",ConsoleColor.Red,true);
+            Player player2 = new HumanPlayer("player2", ConsoleColor.Yellow, false);
         }
 
         private Player CreateNewPlayer()
         {
             string playerName = ChooseName();
             ConsoleColor color = AskColor();
-            int playerType = SetPlayerType();
+            int playerType = ChoosePlayerType();
 
             throw new NotImplementedException();
         }
@@ -133,27 +125,26 @@ use the arrow keys to cycle through options and press enter to select an option.
         {
             if(playerType == 0)
             {
-                Player player = new HumanPlayer();
+                return new HumanPlayer(name, color);
             }
             else
             {
-                Player player = new Bot();
+                return new Bot(name, color, playerType);
             }
 
-            throw new NotImplementedException();
         }
 
-        private int SetPlayerType()
+        private int ChoosePlayerType(bool isPlayer1)
         {
-            if(Player.Equals("Player 1"))
+            if(isPlayer1)
             {
                 return 0;
                 WriteLine("Player one is always human");
             }
             else
             {
-                string prompt = "(PLAYER1) What color would you like to play as?";
-                string[] options = { "Red", "Green", "Blue", "Yellow" };
+                string prompt = "Select oponent:";
+                string[] options = { "Human" ,"Bot (easy)"};
                 Menu colorMenu = new Menu(options, prompt);
                 int selectedIndex = colorMenu.Run();
                 return selectedIndex;
@@ -162,7 +153,7 @@ use the arrow keys to cycle through options and press enter to select an option.
 
         private ConsoleColor AskColor()
         {
-            string prompt = $"{Player} What color would you like to play as?";
+            string prompt = $"What color would you like to play as?";
             string[] options = { "Red", "Green", "Blue", "Yellow" };
             Menu colorMenu = new Menu(options, prompt);
             int selectedIndex = colorMenu.Run();
@@ -190,7 +181,7 @@ use the arrow keys to cycle through options and press enter to select an option.
 
         private string ChooseName()
         {
-           WriteLine($"type name of {Player}");
+           WriteLine($"type your name");
             try
             {
                 string name = ReadLine();

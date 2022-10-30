@@ -8,6 +8,11 @@ namespace Connect_4_CTG
 {
     internal class HumanPlayer : Player
     {
+        public HumanPlayer(string name, ConsoleColor color) : base(name, color)
+        {
+
+        }
+
         public override void Play()
         {
             throw new NotImplementedException();
