@@ -17,24 +17,18 @@ namespace Connect_4_CTG
 
         public override int Play(bool[] options)
         {
-            int choice=99999;
-            prompt(options);
-            try
-            {
-                    while (!int.TryParse(ReadLine(), out choice) && !options[choice - 1])
-                    {
-                        WriteLine("that as invalid. Enter a valid Column number...");
-                        ReadKey(true);
-                    }
-            
-            }
-            catch (IOException)
-            {
-                WriteLine("input not well recieved try again...");
-                return Play(options);
-            }
 
-            return choice-1;
+            prompt(options);
+            int choice = queryInput()-1;
+            for(int i = 0; i < options.Length; i++)
+            {
+                if(i == choice)
+                {
+                    if (options[i]) return choice;
+                }
+            }
+            WriteLine("enter valid number");
+            return Play(options);
         }
 
         private void prompt(bool[] options)
@@ -43,6 +37,27 @@ namespace Connect_4_CTG
             for (int i = 0; i < options.Length; i++) if (options[i]) Write($"Column {i+1}\t");
             WriteLine("");
             WriteLine("enter number of playable column:"); 
+        }
+
+        private int queryInput()
+        {
+            int choice;
+            
+            try
+            {
+                while (!int.TryParse(ReadLine(), out choice))
+                {
+                    WriteLine("that is invalid. Enter a valid Column number...");
+                    ReadKey(true);
+                }
+
+            }
+            catch (IOException)
+            {
+                WriteLine("input not well recieved try again...");
+                return queryInput();
+            }
+            return choice;
         }
     }
 

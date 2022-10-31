@@ -107,6 +107,9 @@ use the arrow keys to cycle through options and press enter to select an option.
             IPlayer player1 = CreateNewPlayer();
             Clear();
             IPlayer player2 = CreateNewPlayer();
+            WriteLine("further implementation coming soon");
+            ExitGame();
+            
         }
 
         private void QuickStart()
