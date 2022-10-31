@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Console;
 
 namespace Connect_4_CTG
 {
@@ -15,6 +16,7 @@ namespace Connect_4_CTG
         private static Controller Instance = null;
         private IPlayer[] Players { get; set; }
         Model Board= Model.GetInstance;
+        private int TurnCounter=0;
        
          public static Controller GetInstance
         {
@@ -40,9 +42,14 @@ namespace Connect_4_CTG
             Players.Append(player);
         }
 
-        private void turn()
+        private void Turn()
         {
-
+            ++TurnCounter;
+            foreach (var player in Players)
+            {
+               
+                player.Play();
+            }
         }
 
 

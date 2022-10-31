@@ -11,7 +11,7 @@ namespace Connect_4_CTG
 
         private static Model Instance = null;
         public static int[][] Board;
-        public static int[] RowDepth { private set; get; }
+        public static int[] ColumnDepth { private set; get; }
         private Model()
         {
 
@@ -33,14 +33,15 @@ namespace Connect_4_CTG
         {
 
            Board = new int[rows][];
-           RowDepth = new int[columns];
+           ColumnDepth = new int[columns];
+           for(int j = 0; j < ColumnDepth.Length; j++) { ColumnDepth[j] = rows;}
            for(int i = 0; i < Board.Length; i++) { Board[i]= new int[columns]; }
         }
 
         public void AddChecker( int column, int playerID)
         {
-            RowDepth[column]++;
-            Board[RowDepth[column]][column] = playerID;
+            ColumnDepth[column]++;
+            Board[ColumnDepth[column]][column] = playerID;
         }
 
         public bool[] getPlayableColumns()
