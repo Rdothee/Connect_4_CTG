@@ -10,7 +10,7 @@ namespace Connect_4_CTG
     {
 
         private static Model Instance = null;
-        public static int[][] Board;
+        public static int[][] Board { get; private set; }
         public static int[] ColumnDepth { private set; get; }
         private Model()
         {
@@ -21,7 +21,7 @@ namespace Connect_4_CTG
         {
             get
             {
-                if (GetInstance == null)
+                if (Instance == null)
                 {
                     Instance = new Model();
                 }

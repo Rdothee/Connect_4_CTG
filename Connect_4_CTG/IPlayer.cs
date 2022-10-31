@@ -6,6 +6,6 @@
         bool IsPlaying { get; }
         string Name { get; set; }
 
-        void Play();
+        int Play(bool[] bools);
     }
 }

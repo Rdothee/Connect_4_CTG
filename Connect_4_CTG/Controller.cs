@@ -14,15 +14,15 @@ namespace Connect_4_CTG
         private const int Columns = 7;
         private const int Rows = 6;
         private static Controller Instance = null;
-        private IPlayer[] Players { get; set; }
-        Model Board= Model.GetInstance;
+        private List<IPlayer> Players = new List<IPlayer>();
         private int TurnCounter=0;
+        Draw Draw;
        
          public static Controller GetInstance
         {
             get
             {
-                if(GetInstance == null)
+                if(Instance == null)
                 {
                     Instance = new Controller();
                 }
@@ -33,24 +33,26 @@ namespace Connect_4_CTG
         private Controller()
         {
             Model.CreateBoard(Rows, Columns);
+            Draw = new Draw(Columns,Rows);
         }
 
         public void AddPlayers(IPlayer player)
         {
-            if (Players == null)
-                Players[0] = player;
-            Players.Append(player);
+           Players.Add(player);
         }
 
-        private void Turn()
+        public void Turn()
         {
             ++TurnCounter;
             foreach (var player in Players)
             {
-               
-                player.Play();
+                player.Play(Model.GetInstance.getPlayableColumns());
             }
         }
+
+       
+    
+
 
 
     }

@@ -113,6 +113,10 @@ use the arrow keys to cycle through options and press enter to select an option.
         {
             IPlayer player1 = new HumanPlayer("player1",ConsoleColor.Red);
             IPlayer player2 = new HumanPlayer("player2", ConsoleColor.Yellow);
+            Controller controller = Controller.GetInstance;
+            controller.AddPlayers(player1);
+            controller.AddPlayers(player2);
+            controller.Turn();
             //TODO: implement bot choice instead of second human player
         }
 

@@ -21,7 +21,7 @@ namespace Connect_4_CTG
 
 
         }
-        public abstract void Play(Model board);
+        public abstract int Play(bool[] bools);
 
 
     }

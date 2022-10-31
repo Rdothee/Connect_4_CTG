@@ -8,7 +8,7 @@
             BotType = botType;
         }
 
-        public override void Play()
+        public override int Play(bool[] bools)
         {
             throw new NotImplementedException();
         }
