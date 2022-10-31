@@ -15,19 +15,19 @@ namespace Connect_4_CTG
         private int Columns;
         private int Rows;
         private int FullWidthRaster;
-        private ConsoleColor[] Colors  { get; set; }
+        private List<ConsoleColor> Colors  = new List<ConsoleColor>();
         private string Block = System.IO.File.ReadAllText("Block.txt");
 
         public void AddColor(ConsoleColor color,int playerIndex)
         {
-            Colors[playerIndex]=color;
+            Colors.Insert(playerIndex,color);
         }
 
         public Draw(int nrColumns, int nrRows)
         {
             Columns = nrColumns;
             Rows = nrRows;
-            FullWidthRaster = Thickness * (nrColumns + 1) + BoxWidth * nrRows; //calculates the full width of the raster
+            FullWidthRaster = Thickness * (nrColumns + 1) + BoxWidth * nrColumns; //calculates the full width of the raster
         }
 
         public void DrawBoard()
@@ -35,39 +35,53 @@ namespace Connect_4_CTG
             throw new NotImplementedException();
         }
 
-        public void DrawBoard(int[][] Board)
+        public void Board(int[][] Board)
         {
+            for(int i = 0; i < Board.Length; i++)
+            {
+                FullLine();
+                for (int j = 0; j < BoxHeight; j++) BoxRow(Board[i]);
+            }
+            FullLine();
            
         }
 
-        private void DrawBoxRow()
+        private void BoxRow(int[]row)
         {
-
+            for(int i=0; i<row.Length; i++)
+            {
+                BoxPart(row[i]);
+            }
+            Edge();
+            WriteLine("");
         }
 
-        private void DrawBoxPart(int playerIndex)
+        private void BoxPart(int playerIndex)
         {
-            DrawEdge();
+            Edge();
             if (playerIndex == 0)
             {
-                for (int J = 0; J < Columns; J++) WriteLine(" ");
+                for (int J = 0; J < BoxWidth; J++) Write(" ");
             }
             else
             {
-                ForegroundColor = Colors[playerIndex];
-                for (int J = 0; J < Columns; J++) WriteLine("#");
+                ForegroundColor = Colors[playerIndex-1];
+                for (int J = 0; J < BoxWidth; J++) Write("#");
             }
+            ResetColor();
         }
 
-        private void DrawFullLine()
+        private void FullLine()
         {
-            for(int i = 0; i < FullWidthRaster; i++)  WriteLine("\t"+Block); 
+            for(int i = 0; i < FullWidthRaster; i++)  Write(Block);
+            WriteLine("");
         }
 
 
-        private void DrawEdge()
+        private void Edge()
         {
-            for(int i=0;i<Thickness;i++)  WriteLine(Block);   
+            for(int i=0;i<Thickness;i++)  Write(Block);   
         }
+
     }
 }

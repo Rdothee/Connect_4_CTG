@@ -116,7 +116,7 @@ use the arrow keys to cycle through options and press enter to select an option.
             Controller controller = Controller.GetInstance;
             controller.AddPlayers(player1);
             controller.AddPlayers(player2);
-            controller.Turn();
+            controller.StartGame();
             //TODO: implement bot choice instead of second human player
         }
 

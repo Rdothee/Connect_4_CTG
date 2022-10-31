@@ -15,7 +15,9 @@ namespace Connect_4_CTG
         private const int Rows = 6;
         private static Controller Instance = null;
         private List<IPlayer> Players = new List<IPlayer>();
+        private Model model = Model.GetInstance;
         private int TurnCounter=0;
+        private bool Win = false;
         Draw Draw;
        
          public static Controller GetInstance
@@ -41,17 +43,31 @@ namespace Connect_4_CTG
            Players.Add(player);
         }
 
-        public void Turn()
+        public void StartGame()
+        {
+            Clear();
+            foreach (var player in Players) Draw.AddColor(player.Color, Players.IndexOf(player));
+            while (!Win)
+            {
+                Turn();
+            }
+        }
+
+        private void Turn()
         {
             ++TurnCounter;
+            
             foreach (var player in Players)
             {
-                player.Play(Model.GetInstance.getPlayableColumns());
+                Clear();
+                Draw.Board(Model.Board);
+                int play = player.Play(model.getPlayableColumns());
+                model.AddChecker(play, Players.IndexOf(player));
             }
         }
 
        
-    
+        
 
 
 

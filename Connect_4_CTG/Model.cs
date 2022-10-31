@@ -34,14 +34,14 @@ namespace Connect_4_CTG
 
            Board = new int[rows][];
            ColumnDepth = new int[columns];
-           for(int j = 0; j < ColumnDepth.Length; j++) { ColumnDepth[j] = rows;}
+           for(int j = 0; j < ColumnDepth.Length; j++) { ColumnDepth[j] = rows-1;}
            for(int i = 0; i < Board.Length; i++) { Board[i]= new int[columns]; }
         }
 
         public void AddChecker( int column, int playerID)
         {
-            ColumnDepth[column]++;
-            Board[ColumnDepth[column]][column] = playerID;
+            Board[ColumnDepth[column]][column] = playerID+1;
+            ColumnDepth[column]--;
         }
 
         public bool[] getPlayableColumns()
