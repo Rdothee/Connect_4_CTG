@@ -166,19 +166,15 @@ use the arrow keys to cycle through options and press enter to select an option.
             {
                 case 0:
                     return ConsoleColor.Red;
-                    break;
                 case 1:
-                    return ConsoleColor.Green;
-                    break;
+                    return ConsoleColor.Green;                 
                 case 2:
-                    return ConsoleColor.Blue;
-                    break;
+                    return ConsoleColor.Blue;                  
                 case 3:
-                    return ConsoleColor.Yellow;
-                    break;
+                    return ConsoleColor.Yellow;                  
                 default:
                     return ConsoleColor.Magenta;
-                    break;
+                    
 
             }
         }
@@ -191,7 +187,7 @@ use the arrow keys to cycle through options and press enter to select an option.
                 string name = ReadLine();
                 return name;
             }
-            catch(IOException e)
+            catch(IOException)
             {
                 WriteLine("Can't choose a name? Let's call you John.");
                 return "John Doe";

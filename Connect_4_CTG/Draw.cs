@@ -12,6 +12,7 @@ namespace Connect_4_CTG
         private const int BoxWidth = 7;
         private const int BoxHeight = 3;
         private const int Thickness = 2;
+        private const string Horizontal = "\t";
         private int Columns;
         private int Rows;
         private int FullWidthRaster;
@@ -30,22 +31,27 @@ namespace Connect_4_CTG
             FullWidthRaster = Thickness * (nrColumns + 1) + BoxWidth * nrColumns; //calculates the full width of the raster
         }
 
-        public void DrawBoard()
-        {
-            throw new NotImplementedException();
-        }
-
+        // draws up the board
         public void Board(int[][] Board)
         {
+            Write("\n");
+            Write(Horizontal);
+            IndicateColumns();
             for(int i = 0; i < Board.Length; i++)
             {
+                Write(Horizontal);
                 FullLine();
-                for (int j = 0; j < BoxHeight; j++) BoxRow(Board[i]);
+                for (int j = 0; j < BoxHeight; j++) {
+                    Write(Horizontal);
+                    BoxRow(Board[i]);
+                }
             }
+            Write(Horizontal);
             FullLine();
            
         }
 
+        //crate a full row of boxes 
         private void BoxRow(int[]row)
         {
             for(int i=0; i<row.Length; i++)
@@ -56,6 +62,7 @@ namespace Connect_4_CTG
             WriteLine("");
         }
 
+        //fills box with spaces (no checker) or the appropriate color
         private void BoxPart(int playerIndex)
         {
             Edge();
@@ -66,21 +73,33 @@ namespace Connect_4_CTG
             else
             {
                 ForegroundColor = Colors[playerIndex-1];
-                for (int J = 0; J < BoxWidth; J++) Write("#");
+                for (int J = 0; J < BoxWidth; J++) Write(playerIndex);
             }
             ResetColor();
         }
 
+        //crates a line to separate rows 
         private void FullLine()
         {
             for(int i = 0; i < FullWidthRaster; i++)  Write(Block);
             WriteLine("");
         }
 
-
+        //creates a single edge for the box
         private void Edge()
         {
             for(int i=0;i<Thickness;i++)  Write(Block);   
+        }
+
+        private void IndicateColumns()
+        {
+            for(int j = 0; j < BoxWidth/2+Thickness; j++) Write(" ");
+            for (int i=0; i < Columns; i++)
+            {
+                Write(i+1);
+                for (int j = 0; j < BoxWidth-1+Thickness; j++) Write(" ");
+            }
+            WriteLine("");
         }
 
     }

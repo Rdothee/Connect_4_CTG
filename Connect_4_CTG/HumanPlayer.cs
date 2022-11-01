@@ -19,7 +19,7 @@ namespace Connect_4_CTG
         {
 
             prompt(options);
-            int choice = queryInput()-1;
+            int choice = queryInput();
             for(int i = 0; i < options.Length; i++)
             {
                 if(i == choice)
@@ -33,10 +33,11 @@ namespace Connect_4_CTG
 
         private void prompt(bool[] options)
         {
+            WriteLine("Playable Columns are:");
             WriteLine("");
-            for (int i = 0; i < options.Length; i++) if (options[i]) Write($"Column {i+1}\t");
+            for (int i = 0; i < options.Length; i++) if (options[i]) Write($"Column {i+1}\n");
             WriteLine("");
-            WriteLine("enter number of playable column:"); 
+            WriteLine("Please enter the number of a playable Column to place a checker...");
         }
 
         private int queryInput()
@@ -48,7 +49,6 @@ namespace Connect_4_CTG
                 while (!int.TryParse(ReadLine(), out choice))
                 {
                     WriteLine("that is invalid. Enter a valid Column number...");
-                    ReadKey(true);
                 }
 
             }
@@ -57,7 +57,7 @@ namespace Connect_4_CTG
                 WriteLine("input not well recieved try again...");
                 return queryInput();
             }
-            return choice;
+            return choice-1;
         }
     }
 

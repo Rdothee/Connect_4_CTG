@@ -9,15 +9,16 @@ namespace Connect_4_CTG
     internal class Model
     {
 
-        private static Model Instance = null;
-        public static int[][] Board { get; private set; }
-        public static int[] ColumnDepth { private set; get; }
-        private Model()
+        //private static Model Instance = null;
+        private int[][] Board; // Rows (Y) , Columns (X)
+        private int[] ColumnDepth;
+        private int[] lastPlacedChecker = new int[2]; // Y,X
+        public Model()
         {
 
         }
 
-        public static Model GetInstance
+         /*public static Model GetInstance
         {
             get
             {
@@ -27,23 +28,24 @@ namespace Connect_4_CTG
                 }
                 return Instance;
             }
-        }
-
-        internal static void CreateBoard(int rows, int columns)
+        }*/
+        //create board with given dimensions
+        internal void CreateBoard(int rows, int columns)
         {
-
            Board = new int[rows][];
            ColumnDepth = new int[columns];
            for(int j = 0; j < ColumnDepth.Length; j++) { ColumnDepth[j] = rows-1;}
            for(int i = 0; i < Board.Length; i++) { Board[i]= new int[columns]; }
         }
-
+        //add checker to board
         public void AddChecker( int column, int playerID)
         {
-            Board[ColumnDepth[column]][column] = playerID+1;
+            Board[ColumnDepth[column]][column] = playerID;
+            lastPlacedChecker[0] = ColumnDepth[column]; // Y
+            lastPlacedChecker[1] = column; // X
             ColumnDepth[column]--;
         }
-
+        //return the columns which are not full
         public bool[] getPlayableColumns()
         {
             bool[] playableColumns = new bool[Board[0].Length];
@@ -60,5 +62,17 @@ namespace Connect_4_CTG
             }
             return playableColumns;
         }
+
+        public int[][] GetBoard()
+        {
+            return Board;
+        }
+
+        public int[] GetLastChecker()
+        {
+            return lastPlacedChecker;
+        }
+
+
     }
 }
