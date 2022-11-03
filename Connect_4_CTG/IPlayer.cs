@@ -7,6 +7,6 @@
         string Name { get; set; }
         public int PlayerID { get; set; }
 
-        int Play(bool[] bools);
+        int Play(Model Board);
     }
 }

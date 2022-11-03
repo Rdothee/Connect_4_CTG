@@ -20,7 +20,7 @@ namespace Connect_4_CTG
             this.Name = name;
             this.Color = color;
         }
-        public abstract int Play(bool[] bools);
+        public abstract int Play(Model Board);
 
 
     }

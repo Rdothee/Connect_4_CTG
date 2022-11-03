@@ -15,7 +15,6 @@ namespace Connect_4_CTG
     internal class Connect_4
     {
         private string Banner=" ";
-        //private bool IsPlayer1; 
 
 
         public void Start()
@@ -134,15 +133,15 @@ use the arrow keys to cycle through options and press enter to select an option.
 
         private Player CreateNewPlayer(string name, ConsoleColor color, int playerType)
         {
-            if(playerType == 0)
+            /*if(playerType == 0)
             {
                 return new HumanPlayer(name, color);
             }
             else
             {
-                return new Bot(name, color, playerType);
-            }
-
+                return new ComputerPlayer(name, color);
+            }*/
+            return new HumanPlayer(name, color);
         }
 
         private int ChoosePlayerType()

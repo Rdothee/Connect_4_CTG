@@ -10,25 +10,27 @@ namespace Connect_4_CTG
 {
     internal class HumanPlayer : Player
     {
+        private bool[] Options;
         public HumanPlayer(string name, ConsoleColor color) : base(name, color)
         {
 
         }
 
-        public override int Play(bool[] options)
+        public override int Play(Model Board)
         {
-
-            prompt(options);
+            Options = Board.getPlayableColumns();
+            prompt(Options);
             int choice = queryInput();
-            for(int i = 0; i < options.Length; i++)
+            if (Options[choice]) return choice;
+            /*for(int i = 0; i < options.Length; i++)
             {
                 if(i == choice)
                 {
                     if (options[i]) return choice;
                 }
-            }
+            }*/
             WriteLine("enter valid number");
-            return Play(options);
+            return Play(Board);
         }
 
         private void prompt(bool[] options)

@@ -77,7 +77,7 @@ namespace Connect_4_CTG
                 Clear();
                 PrintPlayerInfo(player);
                 Draw.Board(model.GetBoard());
-                int play = player.Play(model.getPlayableColumns());
+                int play = player.Play(model);
                 model.AddChecker(play, player.PlayerID);
                 CheckWin(model.GetLastChecker(), player.PlayerID, model.GetBoard());
             }

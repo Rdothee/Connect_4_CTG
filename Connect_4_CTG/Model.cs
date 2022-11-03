@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Connect_4_CTG
 {
-    internal class Model
+    public class Model
     {
 
         //private static Model Instance = null;

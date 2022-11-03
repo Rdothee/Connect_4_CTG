@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace Connect_4_CTG
 {
-    internal class MiniMax : Bot
+    // a concrete implementation of algorithm 
+    internal class MiniMax : Algorithm
     {
-        public MiniMax(string name, ConsoleColor color, int botType) : base(name, color)
+        public MiniMax(Model model)
         {
+        }
+
+        internal override int GenerateSolution(Model Board)
+        {
+            throw new NotImplementedException();
         }
     }
 }
