@@ -17,19 +17,14 @@ namespace Connect_4_CTG
         {
 
         }
-
-         /*public static Model GetInstance
+        //copy constructor
+        public Model(Model oldModel)
         {
-            get
-            {
-                if (Instance == null)
-                {
-                    Instance = new Model();
-                }
-                return Instance;
-            }
-        }*/
-        //create board with given dimensions
+            Board = oldModel.Board;
+            ColumnDepth = oldModel.ColumnDepth;
+            lastPlacedChecker = oldModel.lastPlacedChecker;
+        }
+
         internal void CreateBoard(int rows, int columns)
         {
            Board = new int[rows][];

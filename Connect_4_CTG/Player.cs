@@ -11,6 +11,7 @@ namespace Connect_4_CTG
         public string Name { get; set; }
         public ConsoleColor Color { get; set; }
         public bool IsPlaying { get; protected set; }
+        public int PlayerID { get; set; }
 
         public Player() { }
 

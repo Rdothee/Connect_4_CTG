@@ -41,20 +41,22 @@ namespace Connect_4_CTG
             }
         }
 
-        public Controller()
+        private Controller()
         {
-            WinState = false;
-            model.CreateBoard(Rows, Columns);
-            Draw = new Draw(Columns,Rows);
+            
         }
 
         public void AddPlayers(IPlayer player)
         {
            Players.Add(player);
+           player.PlayerID = Players.IndexOf(player)+1;
         }
 
         public void StartGame()
         {
+            WinState = false;
+            model.CreateBoard(Rows, Columns);
+            Draw = new Draw(Columns, Rows);
             Clear();
             foreach (var player in Players) Draw.AddColor(player.Color, Players.IndexOf(player));
             InitializeSteps();// used to initialize the different steps for determining the win
@@ -71,13 +73,13 @@ namespace Connect_4_CTG
             ++TurnCounter;
             foreach (var player in Players)
             {
-                int playerID = Players.IndexOf(player)+1; 
+               // int playerID = Players.IndexOf(player)+1; 
                 Clear();
                 PrintPlayerInfo(player);
                 Draw.Board(model.GetBoard());
                 int play = player.Play(model.getPlayableColumns());
-                model.AddChecker(play, playerID);
-                CheckWin(model.GetLastChecker(), playerID, model.GetBoard());
+                model.AddChecker(play, player.PlayerID);
+                CheckWin(model.GetLastChecker(), player.PlayerID, model.GetBoard());
             }
         }
 
@@ -115,8 +117,7 @@ namespace Connect_4_CTG
                     int yStep = directionStep[0] * directionUpDown;
 
                     // "walk" into the current direction, starting 1 tile away;
-                    // distance will be 5 at maximum
-                    for (int distance = 1; distance <= 5; distance++)
+                    for (int distance = 1; distance <= Connect+1; distance++)
                     {
                         // now "looking" at these coordinates:
                         int x = xCenter + xStep * distance;
@@ -140,10 +141,9 @@ namespace Connect_4_CTG
                     WriteLine($"Player {Players[playerID-1].Name} has Won!!!");
                     WriteLine("Press Enter to return to Main Menu...");
                     ReadKey(true);
-                    
-       
+                    Connect_4 game = new Connect_4();
+                    game.Start();
                 };
-        // player with that tileColor has won
 }
         }
 
