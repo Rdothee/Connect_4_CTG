@@ -13,9 +13,15 @@ namespace Connect_4_CTG
         {
         }
 
+
         internal override int GenerateSolution(Model Board)
         {
             throw new NotImplementedException();
+        }
+
+       private int negmax()
+        {
+            return 0;
         }
     }
 }

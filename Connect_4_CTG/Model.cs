@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,10 +10,23 @@ namespace Connect_4_CTG
     public class Model
     {
 
-        //private static Model Instance = null;
         private int[][] Board; // Rows (Y) , Columns (X)
-        private int[] ColumnDepth;
-        private int[] lastPlacedChecker = new int[2]; // Y,X
+        public int Height { get; private set; } = 0;
+        public int Width { get; private set; } = 0;
+        public int[] ColumnDepth { get; private set; }
+        public int NumberOfMoves { get; private set; }
+        private readonly int[] lastPlacedChecker = new int[2]; // Y,X
+        public bool IsPlayable
+        {
+            get
+            {
+                foreach (bool space in getPlayableColumns()) 
+                {
+                    if (space) { return true; }
+                }
+                return false;
+            }
+        }
         public Model()
         {
 
@@ -27,6 +41,8 @@ namespace Connect_4_CTG
 
         internal void CreateBoard(int rows, int columns)
         {
+           Height = rows;
+           Width = columns;
            Board = new int[rows][];
            ColumnDepth = new int[columns];
            for(int j = 0; j < ColumnDepth.Length; j++) { ColumnDepth[j] = rows-1;}
@@ -39,6 +55,7 @@ namespace Connect_4_CTG
             lastPlacedChecker[0] = ColumnDepth[column]; // Y
             lastPlacedChecker[1] = column; // X
             ColumnDepth[column]--;
+            NumberOfMoves++;
         }
         //return the columns which are not full
         public bool[] getPlayableColumns()

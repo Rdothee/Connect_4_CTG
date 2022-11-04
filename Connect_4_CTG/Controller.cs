@@ -18,16 +18,18 @@ namespace Connect_4_CTG
         private const int Columns = 7;
         private const int Rows = 6;
         private const int Connect = 4;
+        public List<IPlayer> Players { get; set; }
         public bool WinState { get; private set; }
 
         //variables
         private static Controller Instance = null;
-        private List<IPlayer> Players = new List<IPlayer>();
+       // private List<IPlayer> Players = new List<IPlayer>();
         private Model model = new Model();
         private int TurnCounter=0;
         private int[][] DirectionSteps = new int[4][];
         Draw Draw;
        
+        //singleton design, a new instance is created when the game is won
          public static Controller GetInstance
         {
             get
@@ -46,11 +48,11 @@ namespace Connect_4_CTG
             
         }
 
-        public void AddPlayers(IPlayer player)
+       /* public void AddPlayers(IPlayer player)
         {
            Players.Add(player);
            player.PlayerID = Players.IndexOf(player)+1;
-        }
+        }*/
 
         public void StartGame()
         {
@@ -66,20 +68,18 @@ namespace Connect_4_CTG
             }
         }
 
-      
-
         private void Turn()
         {
             ++TurnCounter;
             foreach (var player in Players)
             {
-               // int playerID = Players.IndexOf(player)+1; 
                 Clear();
                 PrintPlayerInfo(player);
                 Draw.Board(model.GetBoard());
                 int play = player.Play(model);
                 model.AddChecker(play, player.PlayerID);
                 CheckWin(model.GetLastChecker(), player.PlayerID, model.GetBoard());
+                CheckForDraw();
             }
         }
 
@@ -92,7 +92,7 @@ namespace Connect_4_CTG
             WriteLine(Players.IndexOf(player) + 1);
             ResetColor();
         }
-
+        //create direction to check for the win method
         private void InitializeSteps()
         {
             DirectionSteps[0] = new int[2] { -1, 0 }; //N
@@ -100,7 +100,7 @@ namespace Connect_4_CTG
             DirectionSteps[2] = new int[2] { 0, 1 }; //E
             DirectionSteps[3] = new int[2] { 1, 1 }; //SE
         }
-
+        //check if a player has won the game, use directions of DirectionSteps
         private void CheckWin(int[] lastPlayedChecker, int playerID, int[][]Board)
         {
             int xCenter = lastPlayedChecker[1];   // x-coordinate of tile placed last
@@ -135,16 +135,29 @@ namespace Connect_4_CTG
 
                 if (matchingTiles >= Connect) 
                 {
-                    WinState = true;
-                    Clear();
-                    Draw.Board(model.GetBoard());
-                    WriteLine($"Player {Players[playerID-1].Name} has Won!!!");
-                    WriteLine("Press Enter to return to Main Menu...");
-                    ReadKey(true);
-                    Connect_4 game = new Connect_4();
-                    game.Start();
+                    Restart($"Player {Players[playerID - 1].Name} has Won!!!");
                 };
 }
+        }
+
+        private void CheckForDraw()
+        {
+            if (!model.IsPlayable)
+            {
+                Restart($"It's a draw, nobody won!!!");
+            }
+        }
+        //restarts connect-4, back to main menu
+        private void Restart(string prompt)
+        {
+            WinState = true;
+            Clear();
+            Draw.Board(model.GetBoard());
+            WriteLine(prompt);
+            WriteLine("Press Enter to return to Main Menu...");
+            ReadKey(true);
+            Connect_4 game = new Connect_4();
+            game.Start();
         }
 
         private bool IsOutsideOfGrid(int x, int y)

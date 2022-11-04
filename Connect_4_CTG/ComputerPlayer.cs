@@ -7,10 +7,11 @@
 
         public Algorithm Algorithm
         {
-            set { algorithm = value; }
+            set { algorithm = value; algorithm.Player = PlayerID; }
         }
-        public ComputerPlayer(string name, ConsoleColor color) : base(name, color)
+        public ComputerPlayer(string name, ConsoleColor color,int playerID) : base(name, color,playerID)
         {
+           
         }
 
         public override int Play(Model Board)

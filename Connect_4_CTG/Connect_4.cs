@@ -113,11 +113,11 @@ use the arrow keys to cycle through options and press enter to select an option.
 
         private void QuickStart()
         {
-            IPlayer player1 = new HumanPlayer("player1",ConsoleColor.Red);
-            IPlayer player2 = new HumanPlayer("player2", ConsoleColor.Yellow);
+            List<IPlayer> players= new List<IPlayer>();
+            players.Add(new HumanPlayer("player1",ConsoleColor.Red,0));
+            players.Add( new HumanPlayer("player2", ConsoleColor.Yellow,1));
             Controller controller = Controller.GetInstance;
-            controller.AddPlayers(player1);
-            controller.AddPlayers(player2);
+            controller.Players = players;
             controller.StartGame();
             //TODO: implement bot choice instead of second human player
         }
@@ -131,7 +131,7 @@ use the arrow keys to cycle through options and press enter to select an option.
             throw new NotImplementedException();
         }
 
-        private Player CreateNewPlayer(string name, ConsoleColor color, int playerType)
+        private Player CreateNewPlayer(string name, ConsoleColor color, int playerID)
         {
             /*if(playerType == 0)
             {
@@ -141,7 +141,7 @@ use the arrow keys to cycle through options and press enter to select an option.
             {
                 return new ComputerPlayer(name, color);
             }*/
-            return new HumanPlayer(name, color);
+            return new HumanPlayer(name, color,playerID);
         }
 
         private int ChoosePlayerType()

@@ -5,7 +5,7 @@
         ConsoleColor Color { get; set; }
         bool IsPlaying { get; }
         string Name { get; set; }
-        public int PlayerID { get; set; }
+        public int PlayerID { get; }
 
         int Play(Model Board);
     }
