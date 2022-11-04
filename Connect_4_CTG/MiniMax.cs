@@ -14,8 +14,9 @@ namespace Connect_4_CTG
         }
 
 
-        internal override int GenerateSolution(Model Board)
+        internal override int GenerateSolution(Model board)
         {
+            this.Board = board;
             throw new NotImplementedException();
         }
 

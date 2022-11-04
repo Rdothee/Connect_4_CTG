@@ -7,7 +7,7 @@
 
         public Algorithm Algorithm
         {
-            set { algorithm = value; algorithm.Player = PlayerID; }
+            set { algorithm = value; algorithm.PlayerID = PlayerID; }
         }
         public ComputerPlayer(string name, ConsoleColor color,int playerID) : base(name, color,playerID)
         {
