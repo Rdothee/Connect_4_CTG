@@ -15,8 +15,8 @@ namespace Connect_4_CTG
     public sealed class Controller
     {
         //properties
-        private const int Columns = 7;
-        private const int Rows = 6;
+        private const int Columns = 8;
+        private const int Rows = 7;
         private const int Connect = 4;
         public List<IPlayer> Players { get; set; }
         public bool WinState { get; private set; }

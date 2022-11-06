@@ -114,8 +114,8 @@ use the arrow keys to cycle through options and press enter to select an option.
         private void QuickStart()
         {
             List<IPlayer> players= new List<IPlayer>();
-            players.Add(new HumanPlayer("player1",ConsoleColor.Red,0));
-            players.Add( new HumanPlayer("player2", ConsoleColor.Yellow,1));
+            players.Add(new HumanPlayer("player1",ConsoleColor.Red,1));
+            players.Add( new HumanPlayer("player2", ConsoleColor.Yellow,2));
             Controller controller = Controller.GetInstance;
             controller.Players = players;
             controller.StartGame();
