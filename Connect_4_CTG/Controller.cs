@@ -23,7 +23,8 @@ namespace Connect_4_CTG
 
         //variables
         private static Controller Instance = null;
-       // private List<IPlayer> Players = new List<IPlayer>();
+        // private List<IPlayer> Players = new List<IPlayer>();
+        Analyzer Analyzer;
         private Model model = new Model();
         private int TurnCounter=0;
         private int[][] DirectionSteps = new int[4][];
@@ -58,10 +59,12 @@ namespace Connect_4_CTG
         {
             WinState = false;
             model.CreateBoard(Rows, Columns);
+            model.Connect = Connect;
             Draw = new Draw(Columns, Rows);
+            Analyzer = new Analyzer(model);
             Clear();
             foreach (var player in Players) Draw.AddColor(player.Color, Players.IndexOf(player));
-            InitializeSteps();// used to initialize the different steps for determining the win
+            //InitializeSteps();// used to initialize the different steps for determining the win
             while (!WinState)
             {
                 Turn();
@@ -78,9 +81,17 @@ namespace Connect_4_CTG
                 Draw.Board(model.GetBoard());
                 int play = player.Play(model);
                 model.AddChecker(play, player.PlayerID);
-                CheckWin(model.GetLastChecker(), player.PlayerID, model.GetBoard());
-                CheckForDraw();
+                CheckWin(player.PlayerID);
             }
+        }
+
+        private void CheckWin(int playerID)
+        {
+            Analyzer.PlayerID = playerID;
+            Analyzer.Model = model;
+            if(Analyzer.Win) Restart($"Player {Players[playerID - 1].Name} has Won!!!");
+            if(Analyzer.Draw) Restart($"It's a draw, nobody won!!!");
+
         }
 
         private void PrintPlayerInfo(IPlayer player)
@@ -92,8 +103,21 @@ namespace Connect_4_CTG
             WriteLine(Players.IndexOf(player) + 1);
             ResetColor();
         }
+
+        private void Restart(string prompt)
+        {
+            WinState = true;
+            Clear();
+            Draw.Board(model.GetBoard());
+            WriteLine(prompt);
+            WriteLine("Press Enter to return to Main Menu...");
+            ReadKey(true);
+            Connect_4 game = new Connect_4();
+            game.Start();
+        }
+
         //create direction to check for the win method
-        private void InitializeSteps()
+        /*private void InitializeSteps()
         {
             DirectionSteps[0] = new int[2] { -1, 0 }; //N
             DirectionSteps[1] = new int[2] { -1, 1 }; //NE
@@ -140,7 +164,7 @@ namespace Connect_4_CTG
 }
         }
 
-        private void CheckForDraw()
+        private void CheckForDrawGame()
         {
             if (!model.IsPlayable)
             {
@@ -165,6 +189,6 @@ namespace Connect_4_CTG
             if(x < 0 || y < 0) { return true; }
             else if(x > Columns-1 || y > Rows-1) { return true; }
             return false;
-        }
+        }*/
     }
 }

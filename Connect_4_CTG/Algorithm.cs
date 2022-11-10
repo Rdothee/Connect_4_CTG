@@ -9,11 +9,20 @@ namespace Connect_4_CTG
     //bridge design computerPlayer <-> Algorithm: implementor
     internal abstract class Algorithm
     {
-        private int[][] DirectionSteps = new int[4][];
+        internal abstract int GenerateSolution(Model Board);
+
+        public int PlayerID { get; internal set; }
+        protected Model Model = new Model();
+        protected Analyzer Analyzer;
+
+
+
+
+        /*private int[][] DirectionSteps = new int[4][];
         protected Model Board = new Model();
         public int PlayerID { get; internal set; }
 
-        internal abstract int GenerateSolution(Model Board);
+       
 
 
         //3 methods used to check if an alignment is formed for a certain playable column
@@ -60,7 +69,7 @@ namespace Connect_4_CTG
                 }
             }
             return false;
-        }
+        }*/
 
 
 

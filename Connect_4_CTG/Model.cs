@@ -9,22 +9,20 @@ namespace Connect_4_CTG
 {
     public class Model
     {
-
-        private int[][] Board; // Rows (Y) , Columns (X)
+        public int Connect { get; set; }
         public int Height { get; private set; } = 0;
         public int Width { get; private set; } = 0;
         public int[] ColumnDepth { get; private set; }
-        public int NumberOfMoves { get; private set; }
+
+        private int[][] Board; // Rows (Y) , Columns (X)
+        private int NumberOfMoves = 0;
         private readonly int[] lastPlacedChecker = new int[2]; // Y,X
         public bool IsPlayable
         {
             get
             {
-                foreach (bool space in getPlayableColumns()) 
-                {
-                    if (space) { return true; }
-                }
-                return false;
+                if (NumberOfMoves == Height * Width) return false;
+                return true;
             }
         }
         public Model()
