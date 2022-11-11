@@ -37,6 +37,7 @@ namespace Connect_4_CTG
             lastPlacedChecker = oldModel.lastPlacedChecker;
         }
 
+
         internal void CreateBoard(int rows, int columns)
         {
            Height = rows;
@@ -55,6 +56,19 @@ namespace Connect_4_CTG
             ColumnDepth[column]--;
             NumberOfMoves++;
         }
+
+        //set columndepth for played column
+        private void SetColumnDepth(int column)
+        {
+            for (int i = 0; i < Height; i++)
+            {
+                if (Board[i][column] != 0)
+                {
+                    ColumnDepth[column]=i-1;
+                }
+            }
+        }
+
         //return the columns which are not full
         public bool[] getPlayableColumns()
         {
@@ -76,6 +90,12 @@ namespace Connect_4_CTG
         public int[][] GetBoard()
         {
             return Board;
+        }
+
+        public void SetBoard(int[][]Board)
+        {
+            this.Board = Board;
+            for(int i = 0; i < Width; i++) SetColumnDepth(i);
         }
 
         public int[] GetLastChecker()

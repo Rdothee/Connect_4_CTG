@@ -9,6 +9,10 @@ namespace Connect_4_CTG
 {
     internal class Analyzer
     {
+        /*
+         * When using the analyzer always set the model property 
+         */
+
         public Model Model { get; set; }
         public int PlayerID { get; set; }   
         public bool Win {
@@ -18,16 +22,13 @@ namespace Connect_4_CTG
 
         private int[][] DirectionSteps = new int[4][];
         private int Connect=0;
-    
 
-   
-        public Analyzer( Model model)
+       
+
+        public Analyzer()
         {
-            Connect = model.Connect;
-            Model = model;
             InitializeSteps();
         }
-
 
         //create direction to check for the win method
         private void InitializeSteps()
@@ -37,12 +38,20 @@ namespace Connect_4_CTG
             DirectionSteps[2] = new int[2] { 0, 1 }; //E
             DirectionSteps[3] = new int[2] { 1, 1 }; //SE
         }
-        //check if a player has won the game, use directions of DirectionSteps
+        //check if a player has won the game, after last played checker
         private bool CheckWin()
         {
             int[] lastPlayedChecker = Model.GetLastChecker();
             int xCenter = lastPlayedChecker[1];   // x-coordinate of tile placed last
             int yCenter = lastPlayedChecker[0];  // y-coordinate of tile placed last
+            return MakesAlignment(xCenter, yCenter);
+        }
+
+        //check if player wins the game, if a certain column is played
+        public bool CheckWin(int col)
+        {
+            int xCenter = col;   // x-coordinate of tile placed last
+            int yCenter = Model.ColumnDepth[col];  // y-coordinate of tile placed last
             return MakesAlignment(xCenter, yCenter);
         }
 

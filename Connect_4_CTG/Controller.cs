@@ -61,7 +61,7 @@ namespace Connect_4_CTG
             model.CreateBoard(Rows, Columns);
             model.Connect = Connect;
             Draw = new Draw(Columns, Rows);
-            Analyzer = new Analyzer(model);
+            Analyzer = new Analyzer();
             Clear();
             foreach (var player in Players) Draw.AddColor(player.Color, Players.IndexOf(player));
             //InitializeSteps();// used to initialize the different steps for determining the win
@@ -77,6 +77,7 @@ namespace Connect_4_CTG
             foreach (var player in Players)
             {
                 Clear();
+                Analyzer.Model = model;
                 PrintPlayerInfo(player);
                 Draw.Board(model.GetBoard());
                 int play = player.Play(model);
