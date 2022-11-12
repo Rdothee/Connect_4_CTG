@@ -90,7 +90,7 @@ namespace Connect_4_CTG
         {
             Analyzer.PlayerID = playerID;
             Analyzer.Model = model;
-            if(Analyzer.Win) Restart($"Player {Players[playerID - 1].Name} has Won!!!");
+            if(Analyzer.CheckWin(playerID)) Restart($"Player {Players[playerID - 1].Name} has Won!!!");
             if(Analyzer.Draw) Restart($"It's a draw, nobody won!!!");
 
         }

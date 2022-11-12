@@ -14,14 +14,14 @@ namespace Connect_4_CTG
          */
 
         public Model Model { get; set; }
-        public int PlayerID { get; set; }   
-        public bool Win {
+        public int PlayerID = 0;   
+       /* public bool Win {
             get => CheckWin();
-        }
+        }*/
         public bool Draw { get; private set; }
 
         private int[][] DirectionSteps = new int[4][];
-        private int Connect=0;
+        private int Connect=4;
 
        
 
@@ -39,8 +39,9 @@ namespace Connect_4_CTG
             DirectionSteps[3] = new int[2] { 1, 1 }; //SE
         }
         //check if a player has won the game, after last played checker
-        private bool CheckWin()
+        public bool CheckWin(int playerID)
         {
+            this.PlayerID = playerID;
             int[] lastPlayedChecker = Model.GetLastChecker();
             int xCenter = lastPlayedChecker[1];   // x-coordinate of tile placed last
             int yCenter = lastPlayedChecker[0];  // y-coordinate of tile placed last
@@ -48,7 +49,7 @@ namespace Connect_4_CTG
         }
 
         //check if player wins the game, if a certain column is played
-        public bool CheckWin(int col)
+        public bool CheckWin(int col,int player)
         {
             int xCenter = col;   // x-coordinate of tile placed last
             int yCenter = Model.ColumnDepth[col];  // y-coordinate of tile placed last

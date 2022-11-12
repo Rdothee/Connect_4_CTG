@@ -16,7 +16,7 @@
 
         public override int Play(Model Board)
         {
-            throw new NotImplementedException();
+            return GenerateSolution(Board);
         }
 
         protected virtual int GenerateSolution(Model Board)

@@ -16,12 +16,12 @@ namespace Connect_4_CTG
 
     internal class MiniMax : Algorithm
     {
-        public int Depth { get; set; } = 2;
+        public int Depth { get; set; } = 5; //depth of minimax lookup
         private Model newState;
         //private Model AlteredBoard;
         public MiniMax()
         {
-            this.PlayerID = 1;
+
         }
 
         protected override Analyzer Analyzer { get; set; }
@@ -32,7 +32,8 @@ namespace Connect_4_CTG
            // AlterBoard();
             Analyzer = new Analyzer();
             Analyzer.Model = model;
-            throw new NotImplementedException();
+            List<int> results = RunMiniMax(this.PlayerID);
+            return SelectColumn(results);
         }
 
         //alters playerID of the board to work with the minMax algortihm
@@ -52,49 +53,67 @@ namespace Connect_4_CTG
         }*/
 
         //player ID of computer = 1 and player ID of opponent = -1
-       private List<int> StartMiniMax()
+        private int SelectColumn(List<int> results)
+        {
+            int preference = results.Count() / 2;
+            int bestOption;
+            int option;
+            if (results.Exists(x => x == this.PlayerID)) option = this.PlayerID;
+            else if (results.Contains(0)) option = 0;
+            else option = this.PlayerID*-1;
+            bestOption = results.IndexOf(option);
+            for (int i = 0; i < results.Count(); i++)
+            {
+                if (results[i] == option)
+                {
+                    if (Math.Abs(i - preference) < bestOption) bestOption = i;
+                } 
+            }
+            return bestOption;
+        }
+        /*
+         * Start of MiniMax
+         * returns list of values representing the weight for each column
+         */
+       private List<int> RunMiniMax(int player)
         {
             List<int> miniMax = new List<int>();
             for(int i=0; i < Model.Width; i++)
             {
-                if (!Model.getPlayableColumns()[i]) miniMax[0]= (-999*this.PlayerID);
+                if (!Model.getPlayableColumns()[i]) miniMax[0]= (-999*player);
                 Model newState = new Model(Model);
-                newState.AddChecker(i, this.PlayerID);
-                int res = AddLayer(this.PlayerID * -1, Depth - 1,newState);
+                newState.AddChecker(i, player);
+                int res = AddLayer(player * -1, Depth - 1,newState);
                 miniMax.Add(res);
             }
             
             return miniMax;
         }
-
+        //recursive part of MiniMax
         private int AddLayer(int player, int depth, Model upperState)
         {
-            List<int> results = new List<int>();
             for(int i=0;i < Model.Width;i++)
             {
                 int result;
                 if (upperState.getPlayableColumns()[i])
                 {
                     Model recursiveState = new Model(upperState);
-                    newState.AddChecker(i, this.PlayerID);
+                    recursiveState.AddChecker(i, player);
                     Analyzer.Model = recursiveState;
                     Analyzer.PlayerID = player;
-                    if (!Analyzer.Win && depth > 1)
+                    if (!Analyzer.CheckWin(i,player) && depth > 1)
                     {
-                        result = AddLayer(player * -1, depth - 1, recursiveState);
+                        result = AddLayer((player * -1), depth - 1, recursiveState);
                     }
                     else if (Analyzer.Draw) result = 0;
-                    else if (Analyzer.Win) result = player;
+                    else if (Analyzer.CheckWin(i, player)) result = player;
                     else result = player * -1;
-                    results.Add(result);
 
                     //alpha beta pruning
                     if (player == 1 && result > 0) return result;
                     if (player == -1 && result < 0) return result;
                 }
             }
-            if (player == 1) return results.Max();
-            if (player == -1) return results.Min();
             return 0;
         }
     }
