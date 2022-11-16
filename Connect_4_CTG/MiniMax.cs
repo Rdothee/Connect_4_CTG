@@ -16,7 +16,7 @@ namespace Connect_4_CTG
 
     internal class MiniMax : Algorithm
     {
-        public int Depth { get; set; } = 5; //depth of minimax lookup
+        public int Depth { get; set; } = 8; //depth of minimax lookup
         private Model newState;
         //private Model AlteredBoard;
         public MiniMax()
@@ -29,33 +29,15 @@ namespace Connect_4_CTG
         internal override int GenerateSolution(Model model)
         {
             this.Model = model;
-           // AlterBoard();
             Analyzer = new Analyzer();
             Analyzer.Model = model;
-            List<int> results = RunMiniMax(this.PlayerID);
-            return SelectColumn(results);
+           return ConsiderBest();
         }
 
-        //alters playerID of the board to work with the minMax algortihm
-       /* private void AlterBoard()
-        {
-            int[][] Board = Model.GetBoard();
-            AlteredBoard = new Model(Model);
-            for(int x = 0; x < Model.Width; x++)
-            {
-                for(int y=Model.Height; y > Model.ColumnDepth[x]; y++)
-                {
-                    if (Board[y][x] == this.PlayerID) Board[y][x] = 1;
-                    else Board[y][x] = -1;
-                }
-            }
-            AlteredBoard.SetBoard(Board);
-        }*/
 
-        //player ID of computer = 1 and player ID of opponent = -1
-        private int SelectColumn(List<int> results)
+       /* private int SelectColumn(List<int> results)
         {
-            int preference = results.Count() / 2;
+            int preference = Model.Width / 2;
             int bestOption;
             int option;
             if (results.Exists(x => x == this.PlayerID)) option = this.PlayerID;
@@ -70,7 +52,35 @@ namespace Connect_4_CTG
                 } 
             }
             return bestOption;
+        }*/
+
+        private int ConsiderBest()
+        {
+            List<int> best = new List<int>();
+            List<int> results = RunMiniMax(this.PlayerID);
+            for(int i = 0; i < results.Count; i++)
+            {
+                if (results[i] == results.Max()) best.Add(i);
+            }
+            if (best.Count == 1) return best[0];
+
+            // if best is tied, pick most middle
+            int[] centrals = new int[Model.Width];
+            
+            for(int i = 0; i < best.Count; i++)
+            {
+                centrals[i] = ((int)Math.Round((float)Model.Width/2,0)) - Math.Abs(3-i);
+            }
+
+            List<int> newBest = new List<int>();
+            for (int i = 0; i < best.Count; i++)
+            {
+                if(centrals[i] == centrals.Max()) newBest.Add(i);
+            }
+            if(newBest.Count == 1) return newBest[0];
+            else return newBest[Model.GetNumberOfFreeSpaces() % newBest.Count];
         }
+
         /*
          * Start of MiniMax
          * returns list of values representing the weight for each column
@@ -78,42 +88,61 @@ namespace Connect_4_CTG
        private List<int> RunMiniMax(int player)
         {
             List<int> miniMax = new List<int>();
+            Console.Write("results: ");
             for(int i=0; i < Model.Width; i++)
             {
-                if (!Model.getPlayableColumns()[i]) miniMax[0]= (-999*player);
-                Model newState = new Model(Model);
+                if (!Model.IsColumnPlayable(i)) miniMax[0]= (-999*player);
+                //Model newState = new Model(Model);
+                Model newState = (Model)Model.Clone();
                 newState.AddChecker(i, player);
                 int res = AddLayer(player * -1, Depth - 1,newState);
+                //Console.Write(res);
                 miniMax.Add(res);
             }
-            
+            Console.WriteLine();
             return miniMax;
         }
         //recursive part of MiniMax
         private int AddLayer(int player, int depth, Model upperState)
         {
-            for(int i=0;i < Model.Width;i++)
+            int[] results = new int[upperState.Width];
+            for (int i=0;i < Model.Width;i++)
             {
                 int result;
-                if (upperState.getPlayableColumns()[i])
+                if (upperState.IsColumnPlayable(i))
                 {
-                    Model recursiveState = new Model(upperState);
+                    Model recursiveState = (Model)upperState.Clone();
                     recursiveState.AddChecker(i, player);
                     Analyzer.Model = recursiveState;
                     Analyzer.PlayerID = player;
+                    if (Analyzer.CheckWin(i, player))
+                    {
+                        Draw draw = new Draw(recursiveState.Width,recursiveState.Height);
+                        draw.AddColor(ConsoleColor.Yellow, -1);
+                        draw.AddColor(ConsoleColor.Red, 1);
+                        draw.Board(recursiveState.GetBoard());
+                        Console.WriteLine("win found");
+                    }
                     if (!Analyzer.CheckWin(i,player) && depth > 1)
                     {
-                        result = AddLayer((player * -1), depth - 1, recursiveState);
+                        result = AddLayer(player * -1, depth - 1, recursiveState);
                     }
-                    else if (Analyzer.Draw) result = 0;
-                    else if (Analyzer.CheckWin(i, player)) result = player;
-                    else result = player * -1;
+                    else
+                    {
+
+                        if (!Analyzer.CheckWin(i, player)) result =0;
+                        else if(player == this.PlayerID) result = 1;
+                        else result = -1;
+                    }
+                    results.Append(result);
 
                     //alpha beta pruning
                     if (player == 1 && result > 0) return result;
                     if (player == -1 && result < 0) return result;
                 }
             }
+            if(player ==1) return results.Max();
+            if(player == -1) return results.Min();
             return 0;
         }
     }

@@ -25,16 +25,35 @@ namespace Connect_4_CTG
                 return true;
             }
         }
-        public Model()
-        {
-
-        }
         //copy constructor
-        public Model(Model oldModel)
+      /*  public Model(Model oldModel)
         {
+            Connect = oldModel.Connect;
+            Height = oldModel.Height;
+            Width = oldModel.Width;
+            NumberOfMoves = oldModel.NumberOfMoves;
             Board = oldModel.Board;
             ColumnDepth = oldModel.ColumnDepth;
             lastPlacedChecker = oldModel.lastPlacedChecker;
+        }*/
+
+        public Model Clone()
+        {
+            Model newModel = (Model) MemberwiseClone();
+            newModel.Height = Height;
+            newModel.Width = Width;
+            newModel.ColumnDepth = new int[ColumnDepth.Length];
+            newModel.NumberOfMoves = NumberOfMoves;
+            newModel.Board = new int[Height][];
+            for (int j = 0; j < ColumnDepth.Length; j++) { newModel.ColumnDepth[j] = ColumnDepth[j]; }
+            for(int row =0; row< Board.Length; row++) {
+                newModel.Board[row] = new int[Width];
+                for (int column=0; column < Board[row].Length; column++)
+                {
+                    newModel.Board[row][column] = Board[row][column];
+                }
+            }
+            return newModel;
         }
 
 
@@ -58,7 +77,7 @@ namespace Connect_4_CTG
         }
 
         //set columndepth for played column
-        private void SetColumnDepth(int column)
+      /*  private void SetColumnDepth(int column)
         {
             for (int i = 0; i < Height; i++)
             {
@@ -67,7 +86,7 @@ namespace Connect_4_CTG
                     ColumnDepth[column]=i-1;
                 }
             }
-        }
+        }*/
 
         //return the columns which are not full
         public bool[] getPlayableColumns()
@@ -75,7 +94,7 @@ namespace Connect_4_CTG
             bool[] playableColumns = new bool[Board[0].Length];
             for(int i = 0; i < Board[0].Length; i++)
             {
-                if(Board[0][i] == 0)
+                if(IsColumnPlayable(i))
                 {
                     playableColumns[i] = true;
                 }
@@ -87,20 +106,30 @@ namespace Connect_4_CTG
             return playableColumns;
         }
 
+        public bool IsColumnPlayable(int col)
+        {
+            return Board[0][col] == 0;
+        }
+
         public int[][] GetBoard()
         {
             return Board;
         }
 
-        public void SetBoard(int[][]Board)
+       /* public void SetBoard(int[][]Board)
         {
             this.Board = Board;
             for(int i = 0; i < Width; i++) SetColumnDepth(i);
-        }
+        }*/
 
         public int[] GetLastChecker()
         {
             return lastPlacedChecker;
+        }
+
+        public int GetNumberOfFreeSpaces()
+        {
+            return (Height * Width) - NumberOfMoves;
         }
 
 

@@ -49,8 +49,9 @@ namespace Connect_4_CTG
         }
 
         //check if player wins the game, if a certain column is played
-        public bool CheckWin(int col,int player)
+        public bool CheckWin(int col,int playerID)
         {
+            this.PlayerID = playerID;
             int xCenter = col;   // x-coordinate of tile placed last
             int yCenter = Model.ColumnDepth[col];  // y-coordinate of tile placed last
             return MakesAlignment(xCenter, yCenter);
@@ -97,12 +98,11 @@ namespace Connect_4_CTG
             return false;
         }
 
-        private bool CheckForDrawGame()
+        public bool CheckForDrawGame()
         {
             if (!Model.IsPlayable)
             {
                 return true;
-                //Restart($"It's a draw, nobody won!!!");
             }
             return false;
         }

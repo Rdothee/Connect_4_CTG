@@ -16,12 +16,12 @@ namespace Connect_4_CTG
         private int Columns;
         private int Rows;
         private int FullWidthRaster;
-        private List<ConsoleColor> Colors  = new List<ConsoleColor>();
+        private Dictionary<int,ConsoleColor> Colors  = new Dictionary<int, ConsoleColor>();
         private string Block = System.IO.File.ReadAllText("Block.txt");
 
         public void AddColor(ConsoleColor color,int playerIndex)
         {
-            Colors.Insert(playerIndex,color);
+            Colors.Add(playerIndex,color);
         }
 
         public Draw(int nrColumns, int nrRows)
@@ -72,8 +72,10 @@ namespace Connect_4_CTG
             }
             else
             {
-                ForegroundColor = Colors[playerIndex-1];
-                for (int J = 0; J < BoxWidth; J++) Write(playerIndex);
+                ConsoleColor color;
+                Colors.TryGetValue(playerIndex, out color);
+                ForegroundColor = color;
+                for (int J = 0; J < BoxWidth; J++) Write(color.ToString().Substring(0,1));
             }
             ResetColor();
         }

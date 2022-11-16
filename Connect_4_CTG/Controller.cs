@@ -15,8 +15,8 @@ namespace Connect_4_CTG
     public sealed class Controller
     {
         //properties
-        private const int Columns = 8;
-        private const int Rows = 7;
+        private const int Columns = 7;
+        private const int Rows = 6;
         private const int Connect = 4;
         public List<IPlayer> Players { get; set; }
         public bool WinState { get; private set; }
@@ -63,7 +63,7 @@ namespace Connect_4_CTG
             Draw = new Draw(Columns, Rows);
             Analyzer = new Analyzer();
             Clear();
-            foreach (var player in Players) Draw.AddColor(player.Color, Players.IndexOf(player));
+            foreach (var player in Players) Draw.AddColor(player.Color, player.PlayerID);
             //InitializeSteps();// used to initialize the different steps for determining the win
             while (!WinState)
             {
@@ -82,16 +82,16 @@ namespace Connect_4_CTG
                 Draw.Board(model.GetBoard());
                 int play = player.Play(model);
                 model.AddChecker(play, player.PlayerID);
-                CheckWin(player.PlayerID);
+                CheckWin(player);
             }
         }
 
-        private void CheckWin(int playerID)
+        private void CheckWin(IPlayer player)
         {
-            Analyzer.PlayerID = playerID;
+            Analyzer.PlayerID = player.PlayerID;
             Analyzer.Model = model;
-            if(Analyzer.CheckWin(playerID)) Restart($"Player {Players[playerID - 1].Name} has Won!!!");
-            if(Analyzer.Draw) Restart($"It's a draw, nobody won!!!");
+            if(Analyzer.CheckWin(player.PlayerID)) Restart($"Player {player.Name} has Won!!!");
+            if(Analyzer.CheckForDrawGame()) Restart($"It's a draw, nobody won!!!");
 
         }
 
