@@ -58,7 +58,7 @@ namespace Connect_4_CTG
         private bool MakesAlignment(int xCenter, int yCenter)
         {
             int[][] Board = Model.GetBoard();
-            
+            Connect = Model.Connect;
             foreach (var directionStep in DirectionSteps)
             {
                 int matchingTiles = 1; // tile placed last is the first match

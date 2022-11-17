@@ -95,7 +95,7 @@ use the arrow keys to cycle through options and press enter to select an option.
                     CustomStart();
                     break;
                 default:
-                    CustomStart();
+                    QuickStart();
                     break;
 
             }
@@ -110,6 +110,7 @@ use the arrow keys to cycle through options and press enter to select an option.
 
             Controller controller = Controller.GetInstance;
             controller.Players = players;
+            controller = ChooseBoardType(controller);
             controller.StartGame();
 
         }
@@ -117,10 +118,10 @@ use the arrow keys to cycle through options and press enter to select an option.
         private void QuickStart()
         {
             //set players
-            List<IPlayer> players= new List<IPlayer>();
+            List<IPlayer> players = new List<IPlayer>();
             ComputerPlayer computer = new ComputerPlayer("MiniMax (5)", ConsoleColor.Yellow, -1);
             computer.Algorithm = new MiniMax();
-            players.Add(new HumanPlayer("player 1",ConsoleColor.Red,1));
+            players.Add(new HumanPlayer("player 1", ConsoleColor.Red, 1));
             players.Add(computer);
 
             //start game
@@ -130,17 +131,31 @@ use the arrow keys to cycle through options and press enter to select an option.
         }
 
 
-        private Player CreateNewPlayer(string name, ConsoleColor color, int playerID)
+        private Controller ChooseBoardType(Controller controller)
         {
-            /*if(playerType == 0)
+            string prompt = $"Choose the game size:";
+            string[] options = { "Connect-3", "Connect-4","Connect-5" };
+            Menu gameTypeMenu = new Menu(options, prompt);
+            int selectedIndex = gameTypeMenu.Run();
+
+            switch (selectedIndex)
             {
-                return new HumanPlayer(name, color);
+                case 0:
+                    controller.Columns = 3;
+                    controller.Rows = 3;
+                    controller.Connect = 3;
+                    return controller;
+                case 1:
+                    return controller; //connect-4 is the default init
+                case 2:
+                    controller.Columns = 15;
+                    controller.Rows = 15;
+                    controller.Connect = 5;
+                    return controller;
+                default:
+                    return controller;
+
             }
-            else
-            {
-                return new ComputerPlayer(name, color);
-            }*/
-            return new HumanPlayer(name, color,playerID);
         }
 
         private IPlayer ChoosePlayerType()
@@ -176,46 +191,5 @@ use the arrow keys to cycle through options and press enter to select an option.
             }
 
         }
-
-
-        //unused extras
-        /*private ConsoleColor AskColor()
-        {
-            string prompt = $"What color would you like to play as?";
-            string[] options = { "Red", "Green", "Blue", "Yellow" };
-            Menu colorMenu = new Menu(options, prompt);
-            int selectedIndex = colorMenu.Run();
-
-            switch (selectedIndex)
-            {
-                case 0:
-                    return ConsoleColor.Red;
-                case 1:
-                    return ConsoleColor.Green;                 
-                case 2:
-                    return ConsoleColor.Blue;                  
-                case 3:
-                    return ConsoleColor.Yellow;                  
-                default:
-                    return ConsoleColor.Magenta;
-                    
-
-            }
-        }
-
-        private string ChooseName()
-        {
-           WriteLine($"type your name");
-            try
-            {
-                string name = ReadLine();
-                return name;
-            }
-            catch(IOException)
-            {
-                WriteLine("Can't choose a name? Let's call you John.");
-                return "John Doe";
-            }
-        }*/
     }
 }
