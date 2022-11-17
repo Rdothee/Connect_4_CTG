@@ -51,7 +51,7 @@ namespace Connect_4_CTG
         {
             this.PlayerID = playerID;
             int xCenter = col;   // x-coordinate of tile placed last
-            int yCenter = Model.ColumnDepth[col]-1;  // y-coordinate of tile placed last
+            int yCenter = Model.ColumnDepth[col];  // y-coordinate of tile placed last
             return MakesAlignment(xCenter, yCenter);
         }
 

@@ -9,50 +9,45 @@ namespace Connect_4_CTG
     /*
      * miniMax algortithm
      * only works for 2 players
-     * playerID of
-     *  computer = 1
-     *  opponent = -1
+     * playerID
+     *  -1 and 1
+     *  
      */
 
     internal class MiniMax : Algorithm
     {
         public int Depth { get; set; } = 5; //depth of minimax lookup
-        private Model newState;
-        //private Model AlteredBoard;
+
+
         public MiniMax()
         {
 
         }
 
-        protected override Analyzer Analyzer { get; set; }
+        public MiniMax(int depth)
+        {
+            this.Depth = depth;
+        }
+
+        // protected override Analyzer Analyzer { get; set; }
 
         internal override int GenerateSolution(Model model)
         {
             this.Model = model;
             Analyzer = new Analyzer();
             Analyzer.Model = model;
-           return ConsiderBest();
+           return ChooseMove();
         }
 
-
-       /* private int SelectColumn(List<int> results)
+        private int ChooseMove()
         {
-            int preference = Model.Width / 2;
-            int bestOption;
-            int option;
-            if (results.Exists(x => x == this.PlayerID)) option = this.PlayerID;
-            else if (results.Contains(0)) option = 0;
-            else option = this.PlayerID*-1;
-            bestOption = results.IndexOf(option);
-            for (int i = 0; i < results.Count(); i++)
-            {
-                if (results[i] == option)
-                {
-                    if (Math.Abs(i - preference) < bestOption) bestOption = i;
-                } 
-            }
-            return bestOption;
-        }*/
+            int instaWin = InstaWin(this.PlayerID);
+            int instaLose = InstaWin(this.PlayerID*-1);
+            if (instaWin != -1) return instaWin;
+            if (instaLose != -1) return instaLose; //counter win of other player
+            return ConsiderBest();
+            
+        }
 
         private int ConsiderBest()
         {
@@ -85,7 +80,7 @@ namespace Connect_4_CTG
         }
 
         /*
-         * Start of MiniMax
+         * core of MiniMax
          * returns list of values representing the weight for each column
          */
        private List<int> RunMiniMax(int player)
@@ -108,6 +103,7 @@ namespace Connect_4_CTG
             Console.WriteLine();
             return miniMax;
         }
+
         //recursive part of MiniMax
         private int AddLayer(int player, int depth, Model upperState)
         {
@@ -121,14 +117,6 @@ namespace Connect_4_CTG
                     recursiveState.AddChecker(i, player);
                     Analyzer.Model = recursiveState;
                     Analyzer.PlayerID = player;
-                    /*if (Analyzer.CheckWin(player) && player == -1)
-                    {
-                        Draw draw = new Draw(recursiveState.Width,recursiveState.Height);
-                        draw.AddColor(ConsoleColor.Yellow, -1);
-                        draw.AddColor(ConsoleColor.Red, 1);
-                        draw.Board(recursiveState.GetBoard());
-                        Console.WriteLine("win found");
-                    }*/
                     if (!Analyzer.CheckWin(player) && depth > 1)
                     {
                         result = AddLayer(player * -1, depth - 1, recursiveState);
