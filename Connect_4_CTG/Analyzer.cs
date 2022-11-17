@@ -15,10 +15,8 @@ namespace Connect_4_CTG
 
         public Model Model { get; set; }
         public int PlayerID = 0;   
-       /* public bool Win {
-            get => CheckWin();
-        }*/
-        public bool Draw { get; private set; }
+  
+      
 
         private int[][] DirectionSteps = new int[4][];
         private int Connect=4;
@@ -53,7 +51,7 @@ namespace Connect_4_CTG
         {
             this.PlayerID = playerID;
             int xCenter = col;   // x-coordinate of tile placed last
-            int yCenter = Model.ColumnDepth[col];  // y-coordinate of tile placed last
+            int yCenter = Model.ColumnDepth[col]-1;  // y-coordinate of tile placed last
             return MakesAlignment(xCenter, yCenter);
         }
 
@@ -73,7 +71,7 @@ namespace Connect_4_CTG
                     int yStep = directionStep[0] * directionUpDown;
 
                     // "walk" into the current direction, starting 1 tile away;
-                    for (int distance = 1; distance <= Connect + 1; distance++)
+                    for (int distance = 1; distance <= Connect; distance++)
                     {
                         // now "looking" at these coordinates:
                         int x = xCenter + xStep * distance;

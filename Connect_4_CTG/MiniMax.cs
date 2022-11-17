@@ -16,7 +16,7 @@ namespace Connect_4_CTG
 
     internal class MiniMax : Algorithm
     {
-        public int Depth { get; set; } = 8; //depth of minimax lookup
+        public int Depth { get; set; } = 5; //depth of minimax lookup
         private Model newState;
         //private Model AlteredBoard;
         public MiniMax()
@@ -58,22 +58,25 @@ namespace Connect_4_CTG
         {
             List<int> best = new List<int>();
             List<int> results = RunMiniMax(this.PlayerID);
+            int minOrMax;
+            if (this.PlayerID == 1) { minOrMax = results.Max(); }
+            else minOrMax = results.Min();
             for(int i = 0; i < results.Count; i++)
             {
-                if (results[i] == results.Max()) best.Add(i);
+                if (results[i] == minOrMax) best.Add(i);
             }
             if (best.Count == 1) return best[0];
 
             // if best is tied, pick most middle
             int[] centrals = new int[Model.Width];
-            
-            for(int i = 0; i < best.Count; i++)
+            int preference = ((int)Math.Round((float)Model.Width / 2, 0));
+            foreach (int i in best)
             {
-                centrals[i] = ((int)Math.Round((float)Model.Width/2,0)) - Math.Abs(3-i);
+                centrals[i] = preference - Math.Abs((preference-1)-i);
             }
 
             List<int> newBest = new List<int>();
-            for (int i = 0; i < best.Count; i++)
+            foreach (int i in best)
             {
                 if(centrals[i] == centrals.Max()) newBest.Add(i);
             }
@@ -91,12 +94,15 @@ namespace Connect_4_CTG
             Console.Write("results: ");
             for(int i=0; i < Model.Width; i++)
             {
-                if (!Model.IsColumnPlayable(i)) miniMax[0]= (-999*player);
-                //Model newState = new Model(Model);
+                if (!Model.IsColumnPlayable(i)) 
+                {
+                    miniMax.Add(-999 * player);
+                    continue;
+                } 
                 Model newState = (Model)Model.Clone();
                 newState.AddChecker(i, player);
                 int res = AddLayer(player * -1, Depth - 1,newState);
-                //Console.Write(res);
+                Console.Write(res);
                 miniMax.Add(res);
             }
             Console.WriteLine();
@@ -115,23 +121,23 @@ namespace Connect_4_CTG
                     recursiveState.AddChecker(i, player);
                     Analyzer.Model = recursiveState;
                     Analyzer.PlayerID = player;
-                    if (Analyzer.CheckWin(i, player))
+                    /*if (Analyzer.CheckWin(player) && player == -1)
                     {
                         Draw draw = new Draw(recursiveState.Width,recursiveState.Height);
                         draw.AddColor(ConsoleColor.Yellow, -1);
                         draw.AddColor(ConsoleColor.Red, 1);
                         draw.Board(recursiveState.GetBoard());
                         Console.WriteLine("win found");
-                    }
-                    if (!Analyzer.CheckWin(i,player) && depth > 1)
+                    }*/
+                    if (!Analyzer.CheckWin(player) && depth > 1)
                     {
                         result = AddLayer(player * -1, depth - 1, recursiveState);
                     }
                     else
                     {
 
-                        if (!Analyzer.CheckWin(i, player)) result =0;
-                        else if(player == this.PlayerID) result = 1;
+                        if (!Analyzer.CheckWin(player)) result =0;
+                        else if(player == 1) result = 1;
                         else result = -1;
                     }
                     results.Append(result);
