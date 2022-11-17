@@ -31,6 +31,7 @@ namespace Connect_4_CTG
             prompt += @"
 Welcome to Connect-4. What would you like to do?
 use the arrow keys to cycle through options and press enter to select an option."";
+ !  Disclaimer: It's important to maximize the window of the console application for the best experience  !
 ---Main menu---";
             string[] options = { "Play", "About", "Exit" };
             Menu mainMenu = new Menu(options, prompt);
@@ -134,7 +135,7 @@ use the arrow keys to cycle through options and press enter to select an option.
         private Controller ChooseBoardType(Controller controller)
         {
             string prompt = $"Choose the game size:";
-            string[] options = { "Connect-3", "Connect-4","Connect-5" };
+            string[] options = { "Connect-3 (3x3)", "Connect-4 (6x7)","Connect-5 (15x15)" };
             Menu gameTypeMenu = new Menu(options, prompt);
             int selectedIndex = gameTypeMenu.Run();
 
@@ -171,15 +172,15 @@ use the arrow keys to cycle through options and press enter to select an option.
                     return new HumanPlayer("Player 2", ConsoleColor.Yellow, -1);
                       
                 case 1:
-                    computer = new ComputerPlayer("Naive ", ConsoleColor.Yellow, -1);
+                    computer = new ComputerPlayer("Naive ", ConsoleColor.Green, -1);
                     computer.Algorithm = new Naive();
                     return computer;
                 case 2:
-                    computer = new ComputerPlayer("MiniMax (4)", ConsoleColor.Yellow, -1);
+                    computer = new ComputerPlayer("MiniMax (4)", ConsoleColor.Cyan, -1);
                     computer.Algorithm = new MiniMax(4);
                     return computer;
                 case 3:
-                    computer = new ComputerPlayer("MiniMax (6)", ConsoleColor.Yellow, -1);
+                    computer = new ComputerPlayer("MiniMax (6)", ConsoleColor.Blue, -1);
                     computer.Algorithm = new MiniMax(6);
                     return computer;
                 default:

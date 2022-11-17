@@ -99,7 +99,9 @@ namespace Connect_4_CTG
             for (int i=0; i < Columns; i++)
             {
                 Write(i+1);
-                for (int j = 0; j < BoxWidth-1+Thickness; j++) Write(" ");
+                int margin = 1;
+                if (i >= 9) margin = 0;
+                for (int j = 0; j < BoxWidth+margin; j++) Write(" ");
             }
             WriteLine("");
         }
