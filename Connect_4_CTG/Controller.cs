@@ -83,8 +83,8 @@ namespace Connect_4_CTG
         {
             Analyzer.PlayerID = player.PlayerID;
             Analyzer.Model = model;
-            if(Analyzer.CheckWin(player.PlayerID)) Restart($"Player {player.Name} has Won!!!");
-            if(Analyzer.CheckForDrawGame()) Restart($"It's a draw, nobody won!!!");
+            if(Analyzer.CheckWin(player.PlayerID)) Restart($"Player {player.Name} has Won!!!",player.Color);
+            if(Analyzer.CheckForDrawGame()) Restart($"It's a draw, nobody won!!!",ConsoleColor.White);
 
         }
 
@@ -101,13 +101,15 @@ namespace Connect_4_CTG
             ResetColor();
         }
 
-        private void Restart(string prompt)
+        private void Restart(string prompt,ConsoleColor color)
         {
             WinState = true;
             Clear();
             Draw.Board(model.GetBoard());
+            ForegroundColor = color;
             WriteLine(prompt);
             WriteLine("Press Enter to return to Main Menu...");
+            ResetColor();
             ReadKey(true);
             Connect_4 game = new Connect_4();
             game.Start();

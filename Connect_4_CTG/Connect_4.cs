@@ -16,7 +16,8 @@ namespace Connect_4_CTG
     internal class Connect_4
     {
         private string Banner=" ";
-
+        private const int playerID = 1;
+        private const int opponentID = -1;
 
         public void Start()
         {
@@ -105,7 +106,7 @@ use the arrow keys to cycle through options and press enter to select an option.
         private void CustomStart()
         {
             List<IPlayer> players = new List<IPlayer>();
-            players.Add(new HumanPlayer("player 1", ConsoleColor.Red, 1));
+            players.Add(new HumanPlayer("player 1", ConsoleColor.Red, playerID));
             Clear();
             players.Add(ChoosePlayerType());
 
@@ -120,9 +121,9 @@ use the arrow keys to cycle through options and press enter to select an option.
         {
             //set players
             List<IPlayer> players = new List<IPlayer>();
-            ComputerPlayer computer = new ComputerPlayer("MiniMax (5)", ConsoleColor.Yellow, -1);
+            ComputerPlayer computer = new ComputerPlayer("MiniMax (5)", ConsoleColor.Yellow, opponentID);
             computer.Algorithm = new MiniMax();
-            players.Add(new HumanPlayer("player 1", ConsoleColor.Red, 1));
+            players.Add(new HumanPlayer("player 1", ConsoleColor.Red, playerID));
             players.Add(computer);
 
             //start game
@@ -169,22 +170,22 @@ use the arrow keys to cycle through options and press enter to select an option.
             switch (selectedIndex)
             {
                 case 0:
-                    return new HumanPlayer("Player 2", ConsoleColor.Yellow, -1);
+                    return new HumanPlayer("Player 2", ConsoleColor.Yellow, opponentID);
                       
                 case 1:
-                    computer = new ComputerPlayer("Naive ", ConsoleColor.Green, -1);
+                    computer = new ComputerPlayer("Naive ", ConsoleColor.Green, opponentID);
                     computer.Algorithm = new Naive();
                     return computer;
                 case 2:
-                    computer = new ComputerPlayer("MiniMax (4)", ConsoleColor.Cyan, -1);
+                    computer = new ComputerPlayer("MiniMax (4)", ConsoleColor.DarkCyan, opponentID);
                     computer.Algorithm = new MiniMax(4);
                     return computer;
                 case 3:
-                    computer = new ComputerPlayer("MiniMax (6)", ConsoleColor.Blue, -1);
+                    computer = new ComputerPlayer("MiniMax (6)", ConsoleColor.DarkMagenta, opponentID);
                     computer.Algorithm = new MiniMax(6);
                     return computer;
                 default:
-                    computer = new ComputerPlayer("MiniMax (5)", ConsoleColor.Yellow, -1);
+                    computer = new ComputerPlayer("MiniMax (5)", ConsoleColor.Yellow, opponentID);
                     computer.Algorithm = new MiniMax();
                     return computer;
 

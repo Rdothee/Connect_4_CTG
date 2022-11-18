@@ -74,7 +74,7 @@ namespace Connect_4_CTG
             {
                 ConsoleColor color;
                 Colors.TryGetValue(playerIndex, out color);
-                ForegroundColor = color;
+                BackgroundColor = color;
                 for (int J = 0; J < BoxWidth; J++) Write(color.ToString().Substring(0,1));
             }
             ResetColor();

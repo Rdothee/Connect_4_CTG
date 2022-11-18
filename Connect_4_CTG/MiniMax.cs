@@ -107,7 +107,7 @@ namespace Connect_4_CTG
         //recursive part of MiniMax
         private int AddLayer(int player, int depth, Model upperState)
         {
-            int[] results = new int[upperState.Width];
+            List<int> results = new List<int>();
             for (int i=0;i < Model.Width;i++)
             {
                 int result;
@@ -128,13 +128,14 @@ namespace Connect_4_CTG
                         else if(player == 1) result = 1;
                         else result = -1;
                     }
-                    results.Append(result);
+                    results.Add(result);
 
                     //alpha beta pruning
                     if (player == 1 && result > 0) return result;
                     if (player == -1 && result < 0) return result;
                 }
             }
+            if (results.Count() == 0) return 0;
             if(player ==1) return results.Max();
             if(player == -1) return results.Min();
             return 0;
