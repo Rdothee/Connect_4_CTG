@@ -4,6 +4,10 @@ using static System.Console;
 
 namespace Connect_4_CTG
 {
+    /*
+     * class used for all menus
+     * functions: drawing of the menu, recieving and returning input.
+     */
     internal class Menu
     {
         private int SelectedIndex;

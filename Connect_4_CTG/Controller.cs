@@ -13,6 +13,12 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Connect_4_CTG
 {
+    // custom singleton design
+    /*
+     * controls the process of the games 
+     * manages turns and reverts to main menu after win
+     * Hosts the main Model
+     */
     public sealed class Controller
     {
         //properties

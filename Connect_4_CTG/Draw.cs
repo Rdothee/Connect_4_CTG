@@ -7,6 +7,9 @@ using static System.Console;
 
 namespace Connect_4_CTG
 {
+    /*
+     * Used to draw the board in the console app
+     */
     internal class Draw
     {
         private const int BoxWidth = 7;

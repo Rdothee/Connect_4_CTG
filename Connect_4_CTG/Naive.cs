@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Connect_4_CTG
 {
+    /*
+     * A Naive computer player that will make random moves but block imediate wins from opponent 
+     * and play imediate wins when the possibility occurs.
+     */
     internal class Naive : Algorithm
     {
 

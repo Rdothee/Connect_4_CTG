@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 
 namespace Connect_4_CTG
 {
+    /*
+     * used to save a certain state of the board 
+     */
+
     public class Model
     {
         public int Connect { get; set; }
         public int Height { get; private set; } = 0;
         public int Width { get; private set; } = 0;
-        public int[] ColumnDepth { get; private set; }
+        public int[] ColumnDepth { get; private set; } //keeps track of the next playable row for each column
 
         private int[][] Board; // Rows (Y) , Columns (X)
         private int NumberOfMoves = 0;
@@ -25,18 +29,8 @@ namespace Connect_4_CTG
                 return true;
             }
         }
-        //copy constructor
-      /*  public Model(Model oldModel)
-        {
-            Connect = oldModel.Connect;
-            Height = oldModel.Height;
-            Width = oldModel.Width;
-            NumberOfMoves = oldModel.NumberOfMoves;
-            Board = oldModel.Board;
-            ColumnDepth = oldModel.ColumnDepth;
-            lastPlacedChecker = oldModel.lastPlacedChecker;
-        }*/
 
+        //used to make deep-copys of the model class
         public Model Clone()
         {
             Model newModel = (Model) MemberwiseClone();
@@ -66,7 +60,7 @@ namespace Connect_4_CTG
            for(int j = 0; j < ColumnDepth.Length; j++) { ColumnDepth[j] = rows-1;}
            for(int i = 0; i < Board.Length; i++) { Board[i]= new int[columns]; }
         }
-        //add checker to board
+        //add checker to board, can only be used for playable columns
         public void AddChecker( int column, int playerID)
         {
             Board[ColumnDepth[column]][column] = playerID;
@@ -75,18 +69,6 @@ namespace Connect_4_CTG
             ColumnDepth[column]--;
             NumberOfMoves++;
         }
-
-        //set columndepth for played column
-      /*  private void SetColumnDepth(int column)
-        {
-            for (int i = 0; i < Height; i++)
-            {
-                if (Board[i][column] != 0)
-                {
-                    ColumnDepth[column]=i-1;
-                }
-            }
-        }*/
 
         //return the columns which are not full
         public bool[] getPlayableColumns()
@@ -115,12 +97,6 @@ namespace Connect_4_CTG
         {
             return Board;
         }
-
-       /* public void SetBoard(int[][]Board)
-        {
-            this.Board = Board;
-            for(int i = 0; i < Width; i++) SetColumnDepth(i);
-        }*/
 
         public int[] GetLastChecker()
         {

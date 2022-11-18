@@ -10,6 +10,7 @@ namespace Connect_4_CTG
     internal class Analyzer
     {
         /*
+         * Analyzer is used to check for wins or Draw
          * When using the analyzer always set the model property 
          */
 

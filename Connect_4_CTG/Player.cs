@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Connect_4_CTG
 {
-
+    /*
+     * abstract class used by all players as base
+     */
     internal abstract class Player : IPlayer
     {
         public string Name { get; set; }
         public ConsoleColor Color { get; set; }
-        public bool IsPlaying { get; protected set; }
         public int PlayerID { get; private set; }
 
         public Player() { }

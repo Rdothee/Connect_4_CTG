@@ -12,6 +12,7 @@ namespace Connect_4_CTG
 {
     /*
      * This class is responsible for all menu's in the game 
+     * and initializes the controller and players
      */
     internal class Connect_4
     {
@@ -22,7 +23,12 @@ namespace Connect_4_CTG
         public void Start()
         {
             Title = "Connect-4";
-            Banner = System.IO.File.ReadAllText(@"Banner.txt");
+            try
+            {
+                Banner = System.IO.File.ReadAllText(@"Banner.txt");
+            }
+            catch (IOException) { Banner = "--- Banner not found ---\n\n"; }
+           
             RunMainMenu();   
         }
 

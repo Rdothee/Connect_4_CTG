@@ -8,9 +8,6 @@ namespace Connect_4_CTG
 {
     /*
      * miniMax algortithm
-     * only works for 2 players
-     * playerID
-     *  -1 and 1
      *  
      */
 
@@ -28,8 +25,6 @@ namespace Connect_4_CTG
         {
             this.Depth = depth;
         }
-
-        // protected override Analyzer Analyzer { get; set; }
 
         internal override int GenerateSolution(Model model)
         {

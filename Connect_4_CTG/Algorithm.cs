@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 namespace Connect_4_CTG
 {
     //bridge design computerPlayer <-> Algorithm: implementor
+
+    /*
+     * the base for each computer players 
+     * implements an instawin function 
+     */
     internal abstract class Algorithm
     {
         internal abstract int GenerateSolution(Model model);
@@ -15,7 +20,7 @@ namespace Connect_4_CTG
         public int PlayerID { get; internal set; }
         protected Model Model = new Model();
 
-
+        //check if there is a possibility to immediately win the game. 
         protected int InstaWin(int player)
         {
             Analyzer.PlayerID = player;

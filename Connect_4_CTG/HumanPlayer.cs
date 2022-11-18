@@ -8,6 +8,11 @@ using static System.Console;
 
 namespace Connect_4_CTG
 {
+    /*
+     * class that manages the human player 
+     * recieves and returns input
+     * print's info for player
+     */
     internal class HumanPlayer : Player
     {
         private bool[] Options;
